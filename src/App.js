@@ -1,11 +1,11 @@
 import './App.css';
+import Navbar from './compnents/Navbar';
+import Todo from './compnents/Todo';
 
 function App() {
   return (
     <div>
-
-    <h1>Hii this is a react app</h1>
-
+      <Todo/>
     </div>
   );
 }
