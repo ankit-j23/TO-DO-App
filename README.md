@@ -40,14 +40,14 @@ Follow the steps below to set up and run the project locally.
 ### 1. Clone the repository:
 
 ```bash
-git clone git@github.com:<your-username>/<repository-name>.git
-cd <repository-name>
+ git clone https://github.com/ankit-j23/To-Do-App.git
+ cd To-Do-App
 ```
 
 ### 2. Install dependencies:
 
 ```bash
-cd mypp
+cd To-Do-App
 npm install
 ```
 
@@ -55,7 +55,7 @@ npm install
 Start the server:
 
 ```bash
-cd mypp
+cd To-Do-App
 npm start
 ```
 ---
