@@ -2,8 +2,6 @@ import React, { useRef, useState } from 'react'
 import TodoImage from '../assets/todoicon.png'
 import TodoItem from './TodoItem'
 import { v4 as uuidv4 } from 'uuid';
-import Unticked from '../assets/untick.png'
-import Ticked from '../assets/tick.png'
 
 
 const Todo = () => {
@@ -13,7 +11,8 @@ const Todo = () => {
     const modalref = useRef();
     const refmodalinput = useRef();
     const refclose = useRef(null);
-    const [imgbool , setImgbool] = useState(false);
+    const [imgbool, setImgbool] = useState(false);
+    const [imgbool1, setImgbool1] = useState(false);
 
     //function for adding a todo
     const handleClick = () => {
@@ -87,10 +86,23 @@ const Todo = () => {
     }
 
     //showcompleted function for filtering when clicked on the checkbox
-    const showCompleted=()=>{
-        setImgbool(!imgbool);
+    const showCompleted = () => {
+        setImgbool(true);
+        setImgbool1(false)
     }
 
+    const showAll = () => {
+        setImgbool(false);
+        setImgbool1(false)
+    }
+
+    const showUncompleted = () => {
+        setImgbool1(true)
+    }
+
+    const handleClear=()=>{
+        setTodos([])
+    }
 
     return (
         <>
@@ -117,16 +129,16 @@ const Todo = () => {
                             </div>
                             <div className="modal-footer">
                                 <button ref={refclose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button  onClick={handleEdit} type="button" className="btn btn-primary">Save changes</button>
+                                <button onClick={handleEdit} type="button" className="btn btn-primary">Save changes</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-   
+
             {/* for main todo component */}
             <div className='container mw-100 vh-100 bg-light d-flex align-items-center justify-content-center '>
-                <div className='container rounded-4 w-25 h-75 bg-success bg-opacity-75'>
+                <div className='container rounded-4 w-25 h-75 bg-success bg-opacity-75 position-relative'>
                     <div className='d-flex align-content-center mt-4'>
                         <img className='mx-2' src={TodoImage} alt="" style={{ width: '35px', height: '35px' }} />
                         <h3 style={{ fontWeight: 'bold' }} className=''>MyTodos</h3>
@@ -135,14 +147,19 @@ const Todo = () => {
                         <input id='input1' value={todo} onChange={handleChange} ref={inputRef} style={{ width: '400px', height: '40px' }} className='bg-light rounded-2 border border-0 ps-3' type="text" placeholder='Add your task here' />
                         <button onClick={handleClick} type="button" className="btn btn-success h-25 ms-2">ADD</button>
                     </div>
-                    {(todos.length!==0) && <div className='d-flex vw-100 mt-3 ms-4'>
-                            <img className='tickimage' onClick={showCompleted} src={imgbool===false?Unticked:Ticked} style={{ width: '20px', height: '20px' }} alt="" />
-                            <h6 className="ms-2" >Show Completed</h6>
-                    </div>}
-                    <div className='mt-4'>
+                    <div className='d-flex  mt-4 gap-4' style={{ marginLeft: '40px' }}>
+                        <button onClick={showAll} type="button" style={{ borderBottom: '1px solid 	#282828 ', borderLeft: '1px solid #282828' }} class="w-25 btn btn-success btn-sm ">ALL</button>
+                        <button onClick={showCompleted} type="button" style={{ borderBottom: '1px solid 	#282828 ', borderLeft: '1px solid #282828' }} class="btn btn btn-success btn-sm">COMPLETED</button>
+                        <button onClick={showUncompleted} type="button" style={{ borderBottom: '1px solid 	#282828 ', borderLeft: '1px solid #282828' }} class="btn btn btn-success btn-sm">NOT COMPLETED</button>
+                    </div>
+                    <hr class="border border-dark border-2 opacity-75 rounded-5" />
+                    <div className='mt-4 mb-5 pb-3'>
                         {todos.map((item, index) => {
-                            return (!imgbool || item.isComplete)&&<TodoItem key={index} index={index} id={item.id} text={item.text} isComplete={item.isComplete} toggleTick={toggleTick} handleDelete={handleDelete} openModal={openModal} />
+                            return (!imgbool || (!imgbool1 ? (item.isComplete) : (!item.isComplete))) && <TodoItem key={index} index={index} id={item.id} text={item.text} isComplete={item.isComplete} toggleTick={toggleTick} handleDelete={handleDelete} openModal={openModal} />
                         })}
+                    </div>
+                    <div className='position-absolute bottom-0 end-0 me-3 mb-3'>
+                        <button onClick={handleClear} type="button" className="btn btn-success w-100">Clear All</button>
                     </div>
                 </div>
             </div>

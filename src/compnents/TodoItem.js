@@ -9,7 +9,7 @@ const TodoItem = (props) => {
 
   return (
     <>
-      <div className='container d-flex mt-2 justify-content-between'>
+      <div className='container d-flex mt-2 pt-2 bg-success bg-opacity-25' style={{borderBottom:'1px solid #505050'}}>
         <div className='d-flex vw-100'>
           <h5 className='ms-2' >{index+1}.&nbsp;</h5>
           <img className='tickimage' onClick={() => { toggleTick(id) }} src={isComplete === false ? Uncheckbox_icon : Checkedbox_icon} style={{ width: '25px', height: '25px' }} alt="" />
